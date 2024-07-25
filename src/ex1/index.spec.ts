@@ -5,5 +5,12 @@ describe("isRangeAvailable", () => {
     const availableRange = { startDate: new Date('2024-01-01'), endDate: new Date('2024-12-31') };
     const requestedRange = { startDate: new Date('2024-06-01'), endDate: new Date('2024-06-30') };
     expect(isRangeAvailable(requestedRange, availableRange)).toBe(true);
-});
+  });
+
+  it('should return false if the requested range starts before the available range', () => {
+    const availableRange = { startDate: new Date('2024-01-01'), endDate: new Date('2024-12-31') };
+    const requestedRange = { startDate: new Date('2023-12-01'), endDate: new Date('2024-06-30') };
+    expect(isRangeAvailable(requestedRange, availableRange)).toBe(false);
+  });
+
 });
