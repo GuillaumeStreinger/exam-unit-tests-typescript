@@ -19,4 +19,16 @@ describe("isRangeAvailable", () => {
     expect(isRangeAvailable(requestedRange, availableRange)).toBe(false);
   });
 
+  it('Retourne False si la plage de date demandées est complétement extérieur à la plage de date disponible', () => {
+    const availableRange = { startDate: new Date('2024-01-01'), endDate: new Date('2024-12-31') };
+    const requestedRange = { startDate: new Date('2023-12-01'), endDate: new Date('2023-12-31') };
+    expect(isRangeAvailable(requestedRange, availableRange)).toBe(false);
+  });
+
+  it('Retourne True si la plage de date demandées est égale à la plage de date disponible', () => {
+    const availableRange = { startDate: new Date('2024-01-01'), endDate: new Date('2024-12-31') };
+    const requestedRange = { startDate: new Date('2024-01-01'), endDate: new Date('2024-12-31') };
+    expect(isRangeAvailable(requestedRange, availableRange)).toBe(true);
+  });
+
 });
