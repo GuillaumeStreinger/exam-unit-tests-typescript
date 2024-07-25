@@ -18,4 +18,23 @@ describe("submitOrder", () => {
     expect(emailLib.sendOrderEmail).toHaveBeenCalledWith('1');
   });
 
+  it('Retourne une erreur si la commande a déjà été livré', () => {
+    const order = { id: '1', isSubmitted: true };
+    expect(() => submitOrder(order)).toThrow('Order has already been submitted');
+  });
+
+  it('Gère correctement les ids de commande volumineux', () => {
+    const order = { id: '12345678901234567890', isSubmitted: false };
+    const result = submitOrder(order);
+    expect(result.isSubmitted).toBe(true);
+    expect(emailLib.sendOrderEmail).toHaveBeenCalledWith('12345678901234567890');
+  });
+  
+  it('Gère correctemet les ids de commande vide', () => {
+    const order = { id: '', isSubmitted: false };
+    const result = submitOrder(order);
+    expect(result.isSubmitted).toBe(true);
+    expect(emailLib.sendOrderEmail).toHaveBeenCalledWith('');
+  });
+
 });
